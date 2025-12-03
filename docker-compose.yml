@@ -1,0 +1,70 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dps_app
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - dps_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: dps_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - dps_network
+
+  mysql:
+    image: mysql:8
+    container_name: dps_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dps
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - dps_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: dps_phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: user
+      PMA_PASSWORD: password
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    networks:
+      - dps_network
+
+  redis:
+    image: redis:alpine
+    container_name: dps_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - dps_network
+
+networks:
+  dps_network:
+
+volumes:
+  mysql_data:
