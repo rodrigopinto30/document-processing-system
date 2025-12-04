@@ -59,6 +59,15 @@ class ProcessService
     public function status(string $processId): array
     {
         $p = Process::with('results')->findOrFail($processId);
+
+        $estimatedCompletion = null;
+        if ($p->started_at && $p->processed_files > 0 && $p->processed_files < $p->total_files) {
+            $timeElapsed = now()->diffInSeconds($p->started_at);
+            $remainingFiles = $p->total_files - $p->processed_files;
+            $secondsPerFile = $timeElapsed / $p->processed_files;
+            $estimatedCompletion = now()->addSeconds($secondsPerFile * $remainingFiles)->toIso8601String();
+        }
+
         return [
             'process_id' => $p->id,
             'status' => $p->status,
@@ -68,18 +77,9 @@ class ProcessService
                 'percentage' => $p->progress_percentage
             ],
             'started_at' => $p->started_at?->toIso8601String(),
-            'estimated_completion' => null,
+            'estimated_completion' => $estimatedCompletion,
             'results' => $p->results?->toArray()
         ];
-    }
-
-    public function result(string $processId): array
-    {
-        $p = Process::with('results')->findOrFail($processId);
-        if (!$p->results) {
-            return ['message' => 'Results not available yet'];
-        }
-        return $p->results->toArray();
     }
 
     public function results(string $processId): array
