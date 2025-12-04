@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('status');
             $table->integer('total_files')->default(0);
             $table->integer('processed_files')->default(0);
+            $table->integer('progress_percentage')->default(0);
             $table->timestamp('started_at')->nullable();
             $table->timestamp('finished_at')->nullable();
             $table->timestamps();

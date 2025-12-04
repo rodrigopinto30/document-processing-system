@@ -5,9 +5,9 @@ namespace App\Enums;
 enum ProcessStatusEnum: string
 {
     case PENDING = 'PENDING';
-    case RUNNUNG = 'RUNNING';
+    case RUNNING = 'RUNNING';
     case PAUSED = 'PAUSED';
     case COMPLETED = 'COMPLETED';
-    case FIALED = 'FAILED';
+    case FAILED = 'FAILED';
     case STOPPED = 'STOPPED';
 }
