@@ -8,6 +8,7 @@ services:
     container_name: dps_app
     volumes:
       - ./src:/var/www/html
+      - /var/www/html/vendor
     networks:
       - dps_network
 

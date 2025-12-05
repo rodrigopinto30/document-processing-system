@@ -56,3 +56,20 @@ Start docker containers:
 * Telescope will able at: ``http://localhost:8080/telescope ``
 
 * phpMyAdmin will able at: `` http://localhost:8081/``
+
+Copy the `.env.example` file and rename it as `.env`:
+
+```bash 
+cp .env.example .env
+```
+
+Then generate the application key:
+
+```bash
+docker exec -it dps_app php artisan key:generate
+```
+
+Run migrtations:
+```bash
+docker exec -it dps_app php artisan migrate
+```
