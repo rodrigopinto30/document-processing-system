@@ -51,28 +51,6 @@ Start docker containers:
 ./start
 ```
 
-Enter the app container:
-
-```bash
-docker exec -it dps_app bash
-```
-
-Run migrations:
-```bash
-php artisan migrate
-```
-
-Start Telescope:
-```bash
-php artisan telescope:install
-php artisan migrate
-```
-
-Run the application:
-```bash
-php artisan serve
-```
-
 * App will able at: ``http://localhost:8080/``
 
 * Telescope will able at: ``http://localhost:8080/telescope ``
