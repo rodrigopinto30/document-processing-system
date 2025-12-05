@@ -60,6 +60,8 @@ Start docker containers:
 Copy the `.env.example` file and rename it as `.env`:
 
 ```bash 
+cd src
+
 cp .env.example .env
 ```
 
