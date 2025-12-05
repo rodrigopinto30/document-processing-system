@@ -20,4 +20,8 @@ Route::group([
     Route::get('list', [ProcessController::class, "list"]);
 
     Route::get('results/{process_id}', [ProcessController::class, "results"]);
+
+    Route::post('pause/{process_id}', [ProcessController::class, "pause"]);
+
+    Route::post('resume/{process_id}', [ProcessController::class, "resume"]);
 });

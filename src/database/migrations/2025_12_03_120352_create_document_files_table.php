@@ -19,9 +19,8 @@ return new class extends Migration
             $table->bigInteger('word_count')->default(0);
             $table->bigInteger('line_count')->default(0);
             $table->bigInteger('character_count')->default(0);
-            $table->json('frequnt_words')->nullable();
+            $table->json('frequent_words')->nullable();
             $table->timestamps();
-
             $table->foreign('process_id')->references('id')->on('processes')->onDelete('cascade');
         });
     }
