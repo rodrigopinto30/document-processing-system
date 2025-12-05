@@ -83,4 +83,36 @@ class ProcessController extends Controller
             ], 404);
         }
     }
+
+    public function pause(string $process_id): JsonResponse
+    {
+        try {
+            $this->processService->pause($process_id);
+            return response()->json([
+                "message" => "Process paused",
+                "processs_id" => $process_id
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "message" => "Failed to pause processs",
+                "details" => $th->getMessage()
+            ], 400);
+        }
+    }
+
+    public function resume(string $process_id): JsonResponse
+    {
+        try {
+            $this->processService->resume($process_id);
+            return response()->json([
+                "message" => "Process resumed",
+                "process_id" => $process_id
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "error" => "Failed to resume process",
+                "details" => $th->getMessage()
+            ], 400);
+        }
+    }
 }

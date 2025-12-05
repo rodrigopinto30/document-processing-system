@@ -54,7 +54,7 @@ class ProcessFileJob implements ShouldQueue
             $fileContent = $scanner->readFile($this->file);
 
             if (!$fileContent) {
-                throw new \Exception("File {$this->file} could not be read or is empty.");
+                throw new \Exception("File {$this->file} couldn't be read or empty");
             }
 
             $lines = $analyzer->countLines($fileContent);
@@ -74,7 +74,9 @@ class ProcessFileJob implements ShouldQueue
                         'word_count' => $words,
                         'line_count' => $lines,
                         'character_count' => $chars,
-                        'frequent_words' => $topWords
+                        'frequent_words' => $topWords,
+                        'summary' => $summary,
+
                     ]);
                 } else {
                     DocumentFile::create([

@@ -15,8 +15,8 @@ class DocumentFile extends Model
         'file_name',
         'status',
         'word_count',
-        'lines_count',
-        'characted_count',
+        'line_count',
+        'character_count',
         'frequent_words'
     ];
 

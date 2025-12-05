@@ -91,4 +91,36 @@ class ProcessService
 
         return $p->results->toArray();
     }
+
+    public function pause(string $processId): void
+    {
+        $process = Process::findOrFail($processId);
+
+        if ($process->status !== ProcessStatusEnum::RUNNING->value) {
+            throw new \RuntimeException("Only runing proceses can be paused");
+        }
+
+        $process->status = ProcessStatusEnum::PAUSED->value;
+        $process->save();
+        $process->logs()->create([
+            'level' => 'info',
+            'message' => 'Process updated to PAUSED'
+        ]);
+    }
+
+    public function resume(string $processId): void
+    {
+        $process = Process::findOrFail($processId);
+
+        if ($process->status !== ProcessStatusEnum::PAUSED->value) {
+            throw new \RuntimeException("Only paused process can be resumed");
+        }
+
+        $process->status = ProcessStatusEnum::RUNNING->value;
+        $process->save();
+        $process->logs()->create([
+            'level' => 'info',
+            'message' => "Process updated to RUNNING"
+        ]);
+    }
 }
